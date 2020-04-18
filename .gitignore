@@ -1,0 +1,4 @@
+# here we define all files we don't want to include into git repository
+
+.env
+node_modules
