@@ -6,9 +6,14 @@ if(process.env.NODE_ENV !== "production"){
 const express = require("express")
 const app = express();
 const expressLayout = require("express-ejs-layouts")
+const bodyParser = require("body-parser")
 
+//main page route
 const indexRouter = require("./routes/index");
- 
+//author route
+const authorRouter = require("./routes/authors");
+  
+
 //config express application
 
 
@@ -23,6 +28,7 @@ app.use(expressLayout)
 //where public files gonna be
 app.use(express.static("public"))
 
+app.use(bodyParser.urlencoded({limit:'10mb', extended:false}))
 
 //import mongoose
 const mongoose = require("mongoose")
@@ -36,7 +42,7 @@ db.once("open", () =>console.log("KONEKTOVAN"))
 //here we execute, before listen, values from router
 
 app.use('/', indexRouter);
-
+app.use('/authors', authorRouter);
 
 //set listener on server port or default 3000
 app.listen(process.env.PORT ||  3000)
